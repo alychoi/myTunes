@@ -35,7 +35,7 @@ struct song_node * search_song(struct song_node **library, char *name, char *art
 // =======================================================================================================================
 // search for an artist (return a pointer)
 struct song_node * search_artist(struct song_node **library, char *artist) {
-  if (isalpha(artist[0]))) return find_first_song(library[toupper(artist[0])-65], artist);
+  if (isalpha(artist[0])) return find_first_song(library[toupper(artist[0])-65], artist);
   else return find_first_song(library[26], artist);
 }
 
@@ -43,7 +43,7 @@ struct song_node * search_artist(struct song_node **library, char *artist) {
 // =======================================================================================================================
 // print out all the entries under a certain letter
 void print_letter(struct song_node **library, char letter) {
-  if (isalpha(artist[0]))) {
+  if (isalpha(letter)) {
     print_list(library[toupper(letter)-65]);
   }
   else {
@@ -204,3 +204,37 @@ int main() {
 
   return 0;
 }
+
+
+/*
+musiclibrary.c:24:34: warning: incompatible pointer types returning 'struct song_node *' from a function with result type 'struct song_node **' [-Wincompatible-pointer-types]
+  if (isalpha(artist[0])) return insert_song(library[toupper(artist[0])-65], name, artist);
+                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+musiclibrary.c:25:15: warning: incompatible pointer types returning 'struct song_node *' from a function with result type 'struct song_node **' [-Wincompatible-pointer-types]
+  else return insert_song(library[26], name, artist);
+              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+musiclibrary.c:58:22: warning: incompatible pointer types initializing 'struct song_node **' with an expression of type 'struct song_node *' [-Wincompatible-pointer-types]
+  struct song_node **s = search_artist(library, artist);
+                     ^   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+musiclibrary.c:60:27: error: member reference base type 'struct song_node *' is not a structure or union
+  while (s && strcasecmp(s->artist, artist) == 0) {
+                         ~^ ~~~~~~
+musiclibrary.c:61:16: warning: incompatible pointer types passing 'struct song_node **' to parameter of type 'struct song_node *'; dereference with * [-Wincompatible-pointer-types]
+    print_song(s);
+               ^
+               *
+./musiclist.h:11:35: note: passing argument to parameter 's' here
+void print_song(struct song_node *s);
+                                  ^
+musiclibrary.c:62:10: error: member reference base type 'struct song_node *' is not a structure or union
+    s = s->next;
+        ~^ ~~~~
+musiclibrary.c:94:38: warning: incompatible pointer types passing 'struct song_node **' to parameter of type 'struct song_node *'; dereference with * [-Wincompatible-pointer-types]
+  struct song_node *gone = find_song(library, name, artist);
+                                     ^~~~~~~
+                                     *
+./musiclist.h:14:48: note: passing argument to parameter 's' here
+struct song_node * find_song(struct song_node *s, char *n, char *a);
+                                               ^
+5 warnings and 2 errors generated.
+*/

@@ -9,6 +9,7 @@ int song_compare(struct song_node *s1, struct song_node *s2);
 struct song_node * insert_song(struct song_node *s, char *name, char *artist);
 
 void print_song(struct song_node *s);
+
 void print_list(struct song_node *s);
 
 struct song_node * find_song(struct song_node *s, char *n, char *a);
