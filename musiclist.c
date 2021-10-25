@@ -70,18 +70,19 @@ struct song_node * insert_song(struct song_node *s, char *name, char *artist) {
 // =======================================================================================================================
 // helper print function
 void print_song(struct song_node *s) {
-    if (s == NULL) printf("song not found\n");
-    else printf("\t{%s, %s}\n", s->name, s->artist);
+    if (s == NULL) printf("\nsong not found\n");
+    else printf("{%s, %s}", s->name, s->artist);
 }
 
 // print the entire list
 void print_list(struct song_node *s) {
-    printf("[\n");
+    printf("[ ");
     while (s) {
         print_song(s);
+        printf(" | ");
         s = s->next;
     }
-    printf("]\n");
+    printf(" ]\n");
 }
 
 // =======================================================================================================================
@@ -164,16 +165,19 @@ struct song_node * free_list(struct song_node *s) {
     struct song_node *temp = s;
     while (s) {
         s = s->next;
-        printf("Freeing: ");
+        printf("\tfreeing_node: ");
         print_song(temp);
+        printf("\n");
         free(temp);
+        temp = NULL;
         temp = s;
     }
     return s;
 }
 
 // =======================================================================================================================
-// testing musiclist.c
+// testing musiclist.c 
+/*
 int main() {
     struct song_node *list = NULL;
 
@@ -269,4 +273,4 @@ int main() {
     free_list(list);
 
     return 0;
-}
+}*/

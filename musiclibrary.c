@@ -37,7 +37,9 @@ struct song_node ** add_song(struct song_node **library, char *name, char *artis
 // =======================================================================================================================
 // search for a song given song and artist name (return a pointer)
 struct song_node * search_song(struct song_node **library, char *name, char *artist) {
-  if (isalpha(artist[0])) return find_song(library[toupper(artist[0])-65], name, artist);
+  if (isalpha(artist[0])) {
+    return find_song(library[toupper(artist[0])-65], name, artist);
+  }
   else return find_song(library[26], name, artist);
 }
 
@@ -70,14 +72,23 @@ void print_artist(struct song_node **library, char *artist) {
     print_song(s);
     s = s->next;
   }
+  printf("\n");
 }
 
 
 // =======================================================================================================================
 // print out the entire library
 void print_library(struct song_node **library) {
+  if (library == NULL) {
+    printf("[ ]\n");
+  }
+  char c;
   for (int i = 0; i < 27; i++) {
-    print_list(library[i]);
+    if (library[i] != NULL) {
+      c = i + 97;
+      printf("%c: ", c);
+      print_list(library[i]);
+    }
   }
 }
 
@@ -85,15 +96,16 @@ void print_library(struct song_node **library) {
 // =======================================================================================================================
 // shuffle - print out a series of randomly chosen songs.
 void shuffle(struct song_node **library) {
-  struct song_node *rand_list;
   int count = 3;
-  int r = rand() % 27;
   int i;
   for (i = 0; i < 3; i++) {
-    rand_list = library[r];
-    print_song(random_song(rand_list));
-    free_list(rand_list);
+    int r = rand() % 27;
+    while (library[r] == NULL) {
+      r = rand() % 27;
+    }
+    print_song(random_song(library[r]));
   }
+  printf("\n");
 }
 
 
@@ -133,15 +145,19 @@ struct song_node ** clear_library(struct song_node **library) {
   for (i = 0; i < 27; i++) {
     library[i] = free_list(library[i]);
   }
+  free(library);
+  library = NULL;
   return library;
 }
 
 
 // =======================================================================================================================
 // testing musiclibrary.c
-/*
+
 int main() {
   struct song_node **library = make_library();
+
+  srand(time(NULL));
   
   printf("===================================================== print_letter\n");
   print_letter(library, 'a'); 
@@ -170,22 +186,22 @@ int main() {
 
   library = add_song(library, "example_symbol_song", "66");
 
-  printf("===================================================== print_letter\n");
+  printf("===================================================== print_letter c\n");
   print_letter(library, 'c');
 
   printf("===================================================== print_library\n");
   print_library(library);
 
   printf("===================================================== search_song\n");
-  search_song(library, "viva la vida", "coldplay"); // found
-  search_song(library, "hello", "coldplay"); // not found
+  print_song(search_song(library, "viva la vida", "coldplay")); // found
+  print_song(search_song(library, "hello", "coldplay")); // not found
 
   printf("===================================================== search_artist\n");
-  search_artist(library, "m83"); // found
-  search_artist(library, "cAlVin HarriS"); // found
-  search_artist(library, "selena"); // not found
+  print_song(search_artist(library, "m83")); // found
+  print_song(search_artist(library, "cAlVin HarriS")); // found
+  print_song(search_artist(library, "selena")); // not found
 
-  printf("===================================================== delete_song\n");
+  printf("===================================================== delete_song (hello by adele)\n");
   delete_song(library, "hello", "adele");
   print_letter(library, 'a'); // should remove adele from section a
   
@@ -223,4 +239,3 @@ int main() {
 
   return 0;
 }
-*/
