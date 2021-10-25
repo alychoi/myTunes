@@ -162,15 +162,13 @@ struct song_node * remove_song(struct song_node *s, char *n, char *a) {
 // =======================================================================================================================
 // free the entire list
 struct song_node * free_list(struct song_node *s) {
-    struct song_node *temp = s;
-    while (s) {
-        s = s->next;
-        printf("\tfreeing_node: ");
-        print_song(temp);
-        printf("\n");
-        free(temp);
-        temp = NULL;
-        temp = s;
+    while (s != NULL) {
+      struct player *next = s->next;
+      printf("\tfreeing_node: ");
+      print_song(s);
+      printf("\n");
+      free(s);
+      s = next;
     }
     return s;
 }

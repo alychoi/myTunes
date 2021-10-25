@@ -80,10 +80,11 @@ void print_artist(struct song_node **library, char *artist) {
 // print out the entire library
 void print_library(struct song_node **library) {
   if (library == NULL) {
-    printf("[ ]\n");
+      printf("[ ]\n");
   }
   char c;
-  for (int i = 0; i < 27; i++) {
+  int i;
+  for (i = 0; i < 27; i++) {
     if (library[i] != NULL) {
       c = i + 97;
       printf("%c: ", c);
@@ -145,7 +146,6 @@ struct song_node ** clear_library(struct song_node **library) {
   for (i = 0; i < 27; i++) {
     library[i] = free_list(library[i]);
   }
-  free(library);
   library = NULL;
   return library;
 }
