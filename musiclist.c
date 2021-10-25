@@ -161,114 +161,16 @@ struct song_node * remove_song(struct song_node *s, char *n, char *a) {
 
 // =======================================================================================================================
 // free the entire list
+
 struct song_node * free_list(struct song_node *s) {
-    while (s != NULL) {
-      struct player *next = s->next;
-      printf("\tfreeing_node: ");
-      print_song(s);
-      printf("\n");
-      free(s);
-      s = next;
+    struct song_node *temp = s;
+    while (s) {
+        s = s->next;
+        printf("Freeing: ");
+        print_song(temp);
+        printf("\n");
+        free(temp);
+        temp = s;
     }
     return s;
 }
-
-// =======================================================================================================================
-// testing musiclist.c 
-/*
-int main() {
-    struct song_node *list = NULL;
-
-    list = insert_song(list, "Hello", "Adele");
-    list = insert_song(list, "Rolling in the Deep", "Adele");
-
-    list = insert_song(list, "Summer", "Calvin Harris");
-    list = insert_song(list, "Outside", "Calvin Harris");
-
-    list = insert_song(list, "Viva la Vida", "Coldplay");
-    list = insert_song(list, "A Sky Full of Stars", "Coldplay");
-    list = insert_song(list, "Paradise", "Coldplay");
-    list = insert_song(list, "Hymm for the Weekend", "Coldplay");
-    list = insert_song(list, "Clocks", "Coldplay");
-
-    list = insert_song(list, "Time", "Hans Zimmer");
-
-    list = insert_song(list, "Latch", "Disclosure");
-
-    list = insert_song(list, "Midnight City", "M83");
-    list = insert_song(list, "Oblivion", "M83");
-    list = insert_song(list, "Hallo", "Adele");
-
-    printf("===================================================== print_list, print_song\n");
-    print_list(list);
-
-    printf("===================================================== random_song\n");
-    print_song(random_song(list));
-    print_song(random_song(list));
-    print_song(random_song(list));
-    print_song(random_song(list));
-    print_song(random_song(list));
-    print_song(random_song(list));
-
-
-    printf("===================================================== find_first_song\n");
-    printf("First song by COLD\n");
-    print_song(find_first_song(list, "COLD"));
-
-    printf("First song by COLDPLAY\n");
-    print_song(find_first_song(list, "COLDPLAY"));
-
-    printf("First song by CALVIN HARRIS\n");
-    print_song(find_first_song(list, "CALVIN HARRIS"));
-
-
-    printf("===================================================== find_song\n");
-    printf("OUTSIDE by CALVIN HARRIS\n");
-    print_song(find_song(list, "OUTSIDE", "CALVIN HARRIS"));
-
-    printf("SUMMER by CALVIN HARRIS\n");
-    print_song(find_song(list, "SUMMER", "CALVIN HARRIS"));
-
-    printf("VIVA LA VIDA by COLDPLAY\n");
-    print_song(find_song(list, "VIVA LA VIDA", "COLDPLAY"));
-
-
-    printf("===================================================== song_compare\n");
-    printf("Comparing\n");
-    print_song(find_song(list, "SUMMER", "CALVIN HARRIS"));
-    printf("to\n");
-    print_song(find_song(list, "OUTSIDE", "CALVIN HARRIS"));
-    printf("%d\n\n", song_compare(find_song(list, "SUMMER", "CALVIN HARRIS"), find_song(list, "OUTSIDE", "CALVIN HARRIS")));
-
-    printf("Comparing\n");
-    print_song(find_song(list, "VIVA LA VIDA", "COLDPLAY"));
-    printf("to\n");
-    print_song(find_song(list, "SUMMER", "CALVIN HARRIS"));
-    printf("%d\n\n", song_compare(find_song(list, "VIVA LA VIDA", "COLDPLAY"), find_song(list, "SUMMER", "CALVIN HARRIS")));\
-
-    printf("Comparing\n");
-    print_song(find_song(list, "SUMMER", "CALVIN HARRIS"));
-    printf("to\n");
-    print_song(find_song(list, "SUMMER", "CALVIN HARRIS"));
-    printf("%d\n\n", song_compare(find_song(list, "SUMMER", "CALVIN HARRIS"), find_song(list, "SUMMER", "CALVIN HARRIS")));
-
-
-
-    printf("===================================================== remove_song\n");
-    printf("Remove Latch by Disclosure\n");
-    list = remove_song(list, "Latch", "Disclosure");
-    print_list(list);
-
-    printf("Remove hELlo by adElE\n");
-    list = remove_song(list, "hELlo", "adElE");
-    print_list(list);
-
-    printf("Remove He by AdELe\n");
-    list = remove_song(list, "hE", "adElE");
-    print_list(list);
-
-    printf("===================================================== free_list\n");
-    free_list(list);
-
-    return 0;
-}*/
