@@ -7,7 +7,7 @@ main.o: main.c musiclist.h musiclibrary.h
 musiclist.o: musiclist.c musiclist.h
 	gcc -c musiclist.c
 
-musiclibrary.o: musiclibray.c musiclibrary.h
+musiclibrary.o: musiclibrary.c musiclibrary.h
 	gcc -c musiclibrary.c
 
 run:
